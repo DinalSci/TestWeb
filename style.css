@@ -1,0 +1,103 @@
+/* Custom Luxury Styles for BEMINA */
+
+:root {
+    --maroon: #4A0404;
+    --gold: #D4AF37;
+    --cream: #FDFBF7;
+}
+
+::selection {
+    background-color: var(--gold);
+    color: var(--maroon);
+}
+
+/* Custom Cursor (Optional but adds luxury) */
+body {
+    cursor: default;
+}
+
+/* Smooth Scroll */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Gold Text Shimmer Effect */
+.gold-shimmer {
+    background: linear-gradient(to right,
+            #BF953F 20%,
+            #FCF6BA 40%,
+            #FCF6BA 60%,
+            #BF953F 80%);
+    background-size: 200% auto;
+    color: #000;
+    background-clip: text;
+    text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 3s linear infinite;
+}
+
+@keyframes shine {
+    to {
+        background-position: 200% center;
+    }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--cream);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--maroon);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--gold);
+}
+
+/* Preloader Animation */
+#preloader {
+    transition: transform 1.2s cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+.preloader-hidden {
+    transform: translateY(-100%);
+}
+
+/* Animations Reveal */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s ease-out;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Link Hover */
+nav a {
+    position: relative;
+    padding-bottom: 2px;
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: var(--gold);
+    transition: width 0.4s ease;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
