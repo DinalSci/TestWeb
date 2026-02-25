@@ -1,4 +1,4 @@
-/* Custom Luxury Styles for BEMINA */
+/* Refined Luxury Styles for BEMINA */
 
 :root {
     --maroon: #4A0404;
@@ -11,9 +11,9 @@
     color: var(--maroon);
 }
 
-/* Custom Cursor (Optional but adds luxury) */
 body {
     cursor: default;
+    background-color: var(--cream);
 }
 
 /* Smooth Scroll */
@@ -28,6 +28,7 @@ html {
             #FCF6BA 40%,
             #FCF6BA 60%,
             #BF953F 80%);
+    background-size: 200% auto;
     color: transparent;
     background-clip: text;
     -webkit-background-clip: text;
@@ -58,44 +59,43 @@ html {
     background: var(--gold);
 }
 
-/* Preloader Animation */
-#preloader {
-    transition: transform 1.2s cubic-bezier(0.7, 0, 0.3, 1);
-}
-
-.preloader-hidden {
-    transform: translateY(-100%);
-}
-
-/* Animations Reveal */
-.reveal {
+/* Section Transitions */
+.reveal-up {
     opacity: 0;
-    transform: translateY(30px);
-    transition: all 1s ease-out;
+    transform: translateY(40px);
 }
 
-.reveal.active {
-    opacity: 1;
-    transform: translateY(0);
+/* Hero Title Reveal Classes */
+.hero-title span span {
+    display: inline-block;
+    transform: translateY(100%);
 }
 
-/* Link Hover */
-nav a {
-    position: relative;
-    padding-bottom: 2px;
+/* Interactive Product Cards */
+.product-card {
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-nav a::after {
+.product-card:hover {
+    transform: translateY(-10px);
+}
+
+.product-image-container::after {
     content: '';
     position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 1px;
-    background-color: var(--gold);
-    transition: width 0.4s ease;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 30%, rgba(74, 4, 4, 0.2) 100%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
 }
 
-nav a:hover::after {
-    width: 100%;
+.product-card:hover .product-image-container::after {
+    opacity: 1;
+}
+
+/* Floating Navigation Background */
+.nav-scrolled {
+    background: rgba(74, 4, 4, 0.1);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
 }

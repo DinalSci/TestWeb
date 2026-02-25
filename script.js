@@ -2,6 +2,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // Register GSAP ScrollTrigger
     gsap.registerPlugin(ScrollTrigger);
 
+    // Text Splitting Helper for "Patta" Reveals
+    function splitText(selector) {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach(el => {
+            const text = el.innerText;
+            el.innerHTML = text.split(' ').map(word =>
+                `<span class="inline-block overflow-hidden"><span class="inline-block translate-y-full">${word}</span></span>`
+            ).join(' ');
+        });
+    }
+
+    // Initialize Text Splitting
+    splitText('.split-text');
+
     // Preloader Animation
     const preloader = document.getElementById('preloader');
     const preloaderLogo = document.getElementById('preloader-logo');
@@ -10,20 +24,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     tl.to(preloaderLogo, {
         opacity: 1,
-        duration: 1.5,
-        ease: "power2.inOut"
+        scale: 1.1,
+        duration: 2,
+        ease: "expo.out"
     })
         .to(preloaderLogo, {
             opacity: 0,
             y: -10,
+            filter: "blur(10px)",
             duration: 1,
-            delay: 0.5,
             ease: "power2.inOut"
         })
         .to(preloader, {
             yPercent: -100,
-            duration: 1.2,
-            ease: "power4.inOut",
+            duration: 1.5,
+            ease: "expo.inOut",
             onComplete: () => {
                 initHeroAnimations();
             }
@@ -31,59 +46,72 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Hero Animations
     function initHeroAnimations() {
-        gsap.to('.hero-sub', {
+        const heroTl = gsap.timeline();
+
+        heroTl.to('.hero-sub', {
             opacity: 1,
             y: 0,
             duration: 1,
             ease: "power3.out"
-        });
-
-        gsap.to('.hero-title', {
-            opacity: 1,
-            y: 0,
-            duration: 1.5,
-            delay: 0.2,
-            ease: "power4.out"
-        });
-
-        gsap.to('.hero-btn', {
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            delay: 0.5,
-            ease: "power3.out"
-        });
-
-        gsap.to('.hero-img', {
-            scale: 1,
-            duration: 3,
-            ease: "power2.out"
-        });
+        })
+            .to('.hero-title span span', {
+                y: 0,
+                duration: 1.5,
+                stagger: 0.1,
+                ease: "expo.out"
+            }, "-=0.8")
+            .to('.hero-btn', {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power3.out"
+            }, "-=1")
+            .to('.hero-img', {
+                scale: 1,
+                duration: 4,
+                ease: "power2.out"
+            }, "-=2.5");
     }
 
-    // Scroll Animations for Sections
+    // Scroll Animations for Product Cards
     gsap.utils.toArray('.product-card').forEach((card, i) => {
-        gsap.from(card, {
+        const img = card.querySelector('img');
+        const content = card.querySelectorAll('h3, p');
+
+        gsap.from(img, {
+            scrollTrigger: {
+                trigger: card,
+                start: "top 90%",
+                toggleActions: "play none none reverse"
+            },
+            scale: 1.2,
+            duration: 2,
+            ease: "power2.out"
+        });
+
+        gsap.from(content, {
             scrollTrigger: {
                 trigger: card,
                 start: "top 85%",
-                toggleActions: "play none none none"
             },
-            y: 100,
+            y: 30,
             opacity: 0,
-            duration: 1.2,
-            delay: i % 2 * 0.2,
+            stagger: 0.1,
+            duration: 1,
             ease: "power3.out"
         });
     });
 
-    // Subtle parallax for the Hero
-    window.addEventListener('scroll', () => {
-        const scrolled = window.scrollY;
-        gsap.to('.hero-img', {
-            y: scrolled * 0.3,
-            duration: 0.1
-        });
+    // Parallax Depth Effect
+    gsap.to('.hero-img', {
+        scrollTrigger: {
+            trigger: 'body',
+            start: "top top",
+            end: "bottom top",
+            scrub: true
+        },
+        yPercent: 30,
+        ease: "none"
     });
 
     // Hover effect for nav links
@@ -93,8 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
             gsap.to(link, { color: '#D4AF37', duration: 0.3 });
         });
         link.addEventListener('mouseleave', () => {
-            // Logic for handling link color when mix-blend-mode is active
-            // We'll let CSS handle most of it, this is for fine-tuning
+            // Mix-blend CSS handles this mostly
         });
     });
 });
