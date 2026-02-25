@@ -28,10 +28,8 @@ html {
             #FCF6BA 40%,
             #FCF6BA 60%,
             #BF953F 80%);
-    background-size: 200% auto;
-    color: #000;
+    color: transparent;
     background-clip: text;
-    text-fill-color: transparent;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: shine 3s linear infinite;
